@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="robot_type" default="scout"/>
+  <arg name="robot_base" value="$(arg robot_type)_base"/>
+
+  <!-- Robot Description -->
+  <arg name="model" value="$(find xacro)/xacro --inorder $(find iqr_topgear_description)/urdf/iqr_$(arg robot_type)_robot.urdf.xacro"/>
+  <param name="robot_description" command="$(arg model)"/>
+  <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- robot -->
+  <include file="$(eval find(robot_base)+'/launch/base.launch')">
+    <arg name="pub_description" value="false"/>
+    <arg name="enable_ekf"      value="true"/>
+  </include>
+
+  <!-- Lidar -->
+  <!-- <include file="$(find ouster_ros)/ouster.launch">
+    <arg name="sensor_hostname" value="192.168.33.7"/>
+    <arg name="metadata"        value="meta.json"/>
+    <arg name="timestamp_mode"  value="TIME_FROM_PTP_1588"/>
+  </include> -->
+
+  <!-- pointcloud to laserscan -->
+  <include file="$(find iqr_topgear_bringup)/launch/include/pointcloud_to_laserscan.launch.xml">
+  </include>
+
+  <!-- GPS -->
+  <include file="$(find nmea_ros_driver)/launch/bringup.launch">
+    <arg name="pub_gps_odom_tf" value="false"/>
+  </include> 
+
+  <!-- IMU -->
+  <include file="$(find hwt9053_ros_driver)/launch/bringup.launch">
+    <arg name="baudrate"        value="921600"/>
+    <arg name="frame_id"        value="/imu_link"/>
+    <arg name="sensor_com"      value="/dev/imu_com"/>
+    <arg name="pub_mag_msg"     value="false"/>
+    <arg name="publish_rate"    value="100"/>
+  </include>
+
+  <!-- KINECT DK -->
+  <!-- <include file="$(find iqr_topgear_bringup)/launch/include/kinect_dk.launch.xml">
+  </include> -->
+
+</launch>

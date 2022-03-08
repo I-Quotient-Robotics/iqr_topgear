@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kinect_dk">
+
+  <xacro:arg name="dk_tf_prefix" default=""/>
+
+  <xacro:macro name="kinect_dk" params="parent *origin">
+
+    <link name="$(arg dk_tf_prefix)camera_mount"/>
+    <joint name="$(arg dk_tf_prefix)camera_mount_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="$(arg dk_tf_prefix)camera_mount"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+
+    <link name="$(arg dk_tf_prefix)camera_body">
+    </link>
+    <joint name="$(arg dk_tf_prefix)mount_to_camera_body" type="fixed">
+      <parent link="$(arg dk_tf_prefix)camera_mount"/>
+      <child link="$(arg dk_tf_prefix)camera_body"/>
+      <origin xyz="-0.01485 0.0 0.0130" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+    <link name="$(arg dk_tf_prefix)camera_base">
+    </link>
+    <joint name="$(arg dk_tf_prefix)camera_body_to_base" type="fixed">
+      <parent link="$(arg dk_tf_prefix)camera_body"/>
+      <child link="$(arg dk_tf_prefix)camera_base"/>
+      <origin xyz="0.07715 0.0 -0.0065" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+    <link name="$(arg dk_tf_prefix)camera_visor">
+    </link>
+    <joint name="$(arg dk_tf_prefix)camera_base_to_visor" type="fixed">
+      <parent link="$(arg dk_tf_prefix)camera_base"/>
+      <child link="$(arg dk_tf_prefix)camera_visor"/>
+      <origin xyz="0.0 0.0 0." rpy="0.0 0.0 0.0"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>
