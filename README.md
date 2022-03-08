@@ -1,4 +1,4 @@
-# iqr_miivii_robot
+# iqr_topgear
 
 ## DEPEND
 - [BUNKER ROS DRIVER](https://github.com/I-Quotient-Robotics/bunker_ros_driver)
