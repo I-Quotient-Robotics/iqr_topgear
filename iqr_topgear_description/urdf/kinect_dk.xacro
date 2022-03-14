@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kinect_dk">
 
-  <xacro:arg name="dk_tf_prefix" default=""/>
+  <xacro:arg name="dk_tf_prefix" default="dk_"/>
 
   <xacro:macro name="kinect_dk" params="parent *origin">
 
