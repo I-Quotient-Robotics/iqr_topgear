@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="iqr_husky_robot">
+
+  <xacro:property name="package_name" value="iqr_topgear_description"/>
+
+  <!-- Include HUSKY ROBOT -->
+  <xacro:include filename="$(find husky_description)/urdf/husky.urdf.xacro"/>
+
+  <!-- Include accessories -->
+  <xacro:include filename="$(find ${package_name})/urdf/sensor_support.xacro"/>
+
+  <!-- TOP PLATE -->
+  <link name="topplate_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.544 0.420 0.006"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.19 0.2 0.19 1"/>
+      </material>
+    </visual>
+  </link>
+  <joint name="top_plate_joint" type="fixed">
+    <parent link="user_rail_link" />
+    <child link="topplate_link"/>
+    <origin xyz="-0.270 0 0.003" rpy="0 0 0"/>
+  </joint>
+
+  <!-- IQR sensor support -->
+  <xacro:sensor_support package="${package_name}" parent="topplate_link">
+    <origin xyz="0 0 0.003" rpy="0 0 0"/>
+  </xacro:sensor_support>
+
+</robot>

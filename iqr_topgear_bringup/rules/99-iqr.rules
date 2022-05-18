@@ -1,5 +1,18 @@
-KERNEL=="ttyTHS1", MODE:="0777", SYMLINK+="imu_com"
-KERNEL=="ttyTHS4", MODE:="0777", SYMLINK+="gps_com"
-KERNEL=="ttyUSB1", MODE:="0777", SYMLINK+="robot_com"
+# JACKAL BASE 
+KERNEL=="ttyACM*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", MODE:="0777", SYMLINK+="jackal_base"
 
+# HUSKY BASE 
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", ATTRS{serial}=="IQR23200", MODE:="0777", SYMLINK+="husky_base"
+
+# SCOUT BASE
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="IQR23201", MODE:="0777", SYMLINK+="scout_base"
+
+# IMU COM
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="A10LOUPM", MODE:="0777", SYMLINK+="imu_com"
+
+# GPS COM
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="A10LOUPX", MODE:="0777", SYMLINK+="gps_com"
+
+# JOYSTICKS
+KERNEL=="js*", ATTRS{idVendor}=="054C", ATTRS{idProduct}=="05C4", SYMLINK="input/ps4"
 KERNEL=="js*", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="028e", SYMLINK="input/jy4"

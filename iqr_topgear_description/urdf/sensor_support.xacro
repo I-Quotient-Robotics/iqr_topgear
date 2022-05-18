@@ -39,11 +39,11 @@
     </joint>
 
     <!-- imu link -->
-    <link name="imu_link"/>
+    <link name="iqr_imu_link"/>
     <joint name="imu_link_joint" type="fixed">
       <origin xyz="0.0 0.0 0.014" rpy="0 0 0"/>
       <parent link="sensor_support_link"/>
-      <child link="imu_link"/>
+      <child link="iqr_imu_link"/>
     </joint>
 
     <!-- main gps link -->

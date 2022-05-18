@@ -17,11 +17,11 @@
   </include>
 
   <!-- Lidar -->
-  <!-- <include file="$(find ouster_ros)/ouster.launch">
+  <include file="$(find ouster_ros)/ouster.launch">
     <arg name="sensor_hostname" value="192.168.33.7"/>
     <arg name="metadata"        value="meta.json"/>
     <arg name="timestamp_mode"  value="TIME_FROM_PTP_1588"/>
-  </include> -->
+  </include>
 
   <!-- pointcloud to laserscan -->
   <include file="$(find iqr_topgear_bringup)/launch/include/pointcloud_to_laserscan.launch.xml">
@@ -29,20 +29,23 @@
 
   <!-- GPS -->
   <include file="$(find nmea_ros_driver)/launch/bringup.launch">
+    <arg name="nmea_com"        value="/dev/gps_com"/>
+    <arg name="baudrate"        value="115200"/>
+    <arg name="frame_id"        value="/main_gps_link"/>
     <arg name="pub_gps_odom_tf" value="false"/>
   </include> 
 
   <!-- IMU -->
   <include file="$(find hwt9053_ros_driver)/launch/bringup.launch">
     <arg name="baudrate"        value="921600"/>
-    <arg name="frame_id"        value="/imu_link"/>
+    <arg name="frame_id"        value="/iqr_imu_link"/>
     <arg name="sensor_com"      value="/dev/imu_com"/>
     <arg name="pub_mag_msg"     value="false"/>
     <arg name="publish_rate"    value="100"/>
   </include>
 
   <!-- KINECT DK -->
-  <!-- <include file="$(find iqr_topgear_bringup)/launch/include/kinect_dk.launch.xml">
-  </include> -->
+  <include file="$(find iqr_topgear_bringup)/launch/include/kinect_dk.launch.xml">
+  </include>
 
 </launch>

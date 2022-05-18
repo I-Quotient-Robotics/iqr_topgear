@@ -1,0 +1,8 @@
+SUBSYSTEMS=="usb", ENV{.LOCAL_ifNum}="$attr{bInterfaceNumber}"
+SUBSYSTEMS=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6011", ENV{.LOCAL_ifNum}=="00", MODE:="0777", SYMLINK+="rs232_1"
+SUBSYSTEMS=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6011", ENV{.LOCAL_ifNum}=="01", MODE:="0777", SYMLINK+="rs485_1"
+SUBSYSTEMS=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6011", ENV{.LOCAL_ifNum}=="02", MODE:="0777", SYMLINK+="rs485_2"
+SUBSYSTEMS=="usb",ATTRS{idVendor}=="0403",ATTRS{idProduct}=="6011", ENV{.LOCAL_ifNum}=="03", MODE:="0777", SYMLINK+="rs485_3"
+
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="A50608YP", MODE:="0777", SYMLINK+="rs485_4"
+

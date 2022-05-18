@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+ 
+  <arg name="husky_port" default="/dev/husky_base"/>
+  <arg name="pub_description" default="true"/>
+  <arg name="enable_ekf" default="false"/>
+
+  <group if="$(arg pub_description)">
+    <arg name="model" default="$(find xacro)/xacro --inorder $(find husky_description)/urdf/husky.urdf.xacro"/>
+    <param name="robot_description" command="$(arg model)"/>
+    <!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/> -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  </group>
+
+  <!-- husky harware driver -->
+  <node pkg="husky_base" type="husky_node" name="husky_node">
+    <rosparam subst_value="true">
+        control_frequency: 10.0
+        diagnostic_frequency: 1.0
+
+        max_acceleration: 3.0
+        max_speed: 1.0
+        wheel_diameter: 0.3302
+        polling_timeout: 10.0
+    </rosparam>
+    <param name="port" value="$(arg husky_port)" />
+    
+    <!-- <remap from="/husky_velocity_controller/odom" to="/odom"/>
+    <remap from="/husky_velocity_controller/cmd_vel" to="/cmd_vel"/> -->
+  </node>
+
+  <!-- Differential controller parameters and basic localization -->
+  <include file="$(find husky_control)/launch/control.launch">
+    <arg name="enable_odom_tf" value="false" if="$(arg enable_ekf)"/>
+  </include>
+
+  <!-- joy control -->
+  <include file="$(find iqr_teleop)/launch/joy_teleop.launch"/>
+
+  <!-- Diagnostic Aggregator -->
+  <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
+    <rosparam command="load" file="$(find husky_base)/config/diagnostics.yaml"/>
+  </node>
+
+  <!-- Robot pose ekf -->
+  <group if="$(arg enable_ekf)">
+    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" output="screen">
+      <param name="output_frame" value="odom"/>
+      <param name="base_footprint_frame" value="base_footprint"/>
+      <param name="freq" value="50.0"/>
+      <param name="sensor_timeout" value="0.2"/>
+      <param name="odom_used" value="true"/>
+      <param name="imu_used" value="true"/>
+      <param name="vo_used" value="false"/>
+      <param name="debug" value="false"/>
+      <param name="self_diagnose" value="false"/>
+      <remap from="imu_data" to="/imu/data"/>
+      <remap from="odom" to="/odom"/>
+    </node>
+  </group>
+
+</launch>
