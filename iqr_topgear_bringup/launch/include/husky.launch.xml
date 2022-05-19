@@ -25,8 +25,8 @@
     </rosparam>
     <param name="port" value="$(arg husky_port)" />
     
-    <!-- <remap from="/husky_velocity_controller/odom" to="/odom"/>
-    <remap from="/husky_velocity_controller/cmd_vel" to="/cmd_vel"/> -->
+    <remap from="/husky_velocity_controller/odom" to="/odom"/>
+    <remap from="/husky_velocity_controller/cmd_vel" to="/cmd_vel"/>
   </node>
 
   <!-- Differential controller parameters and basic localization -->

@@ -29,8 +29,8 @@
     <param name="port" value="$(arg jackal_port)" />
     <param name="wireless_interface" value="$(optenv JACKAL_WIRELESS_INTERFACE wlan0)"/>
 
-    <!-- <remap from="/jackal_velocity_controller/odom" to="/odom"/>
-    <remap from="/jackal_velocity_controller/cmd_vel" to="/cmd_vel"/> -->
+    <remap from="/jackal_velocity_controller/odom" to="/odom"/>
+    <remap from="/jackal_velocity_controller/cmd_vel" to="/cmd_vel"/>
   </node>
 
   <!-- TODO: Eliminate this by compiling the necessary message definitions into jackal_base. -->
